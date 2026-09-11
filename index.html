@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dad ❤️ My Birthday</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at top, #26345c, #0b1020 55%, #050711);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  width: 92%;
+  max-width: 430px;
+  min-height: 620px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen {
+  width: 100%;
+  text-align: center;
+  display: none;
+  animation: fadeIn .5s ease;
+}
+
+.screen.active {
+  display: block;
+}
+
+.emoji {
+  font-size: 75px;
+  margin-bottom: 20px;
+  animation: float 2.5s infinite ease-in-out;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 1.15;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+p {
+  color: #c9cde0;
+  font-size: 17px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+.highlight {
+  color: #ffd84d;
+  font-weight: bold;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 16px 28px;
+  border-radius: 50px;
+  color: #111;
+  background: linear-gradient(135deg, #ffd84d, #ff9f43);
+  box-shadow: 0 10px 30px rgba(255, 190, 60, .25);
+  transition: .2s;
+}
+
+button:active {
+  transform: scale(.94);
+}
+
+.small {
+  font-size: 13px;
+  color: #858ba5;
+  margin-top: 18px;
+}
+
+/* Gift cards */
+
+.gifts {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.gift {
+  position: relative;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: .25s;
+  overflow: hidden;
+}
+
+.gift:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,.12);
+  border-color: #ffd84d;
+}
+
+.gift-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 31px;
+  background: rgba(255,216,77,.12);
+}
+
+.gift-info {
+  flex: 1;
+}
+
+.gift-info h3 {
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.gift-info span {
+  font-size: 12px;
+  color: #8f95ad;
+}
+
+.radio {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #747a92;
+  border-radius: 50%;
+}
+
+.gift.selected .radio {
+  border-color: #ffd84d;
+  background: #ffd84d;
+  box-shadow: inset 0 0 0 5px #11172a;
+}
+
+/* Result */
+
+.result-emoji {
+  font-size: 85px;
+  margin-bottom: 15px;
+}
+
+.promise {
+  margin-top: 25px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255,216,77,.08);
+  border: 1px solid rgba(255,216,77,.25);
+  color: #fff;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.signature {
+  margin-top: 20px;
+  color: #ffd84d;
+  font-weight: bold;
+}
+
+/* Progress */
+
+.progress {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #343a52;
+}
+
+.dot.active {
+  background: #ffd84d;
+  width: 22px;
+  border-radius: 10px;
+}
+
+/* Animations */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Confetti */
+
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 12px;
+  top: -20px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="progress">
+    <div class="dot active" id="d1"></div>
+    <div class="dot" id="d2"></div>
+    <div class="dot" id="d3"></div>
+  </div>
+
+
+  <!-- SCREEN 1 -->
+
+  <section class="screen active" id="screen1">
+
+    <div class="emoji">🎂</div>
+
+    <h1>Dad, My Birthday Is Coming! 🥳</h1>
+
+    <p>
+      Dad 👀<br>
+      My birthday is on
+      <span class="highlight">September 23</span>.
+    </p>
+
+    <p>
+      So I have one very important question for you...
+    </p>
+
+    <button onclick="nextScreen(2)">
+      Tap to find out 👀
+    </button>
+
+    <div class="small">
+      Dad, please take this seriously 😂
+    </div>
+
+  </section>
+
+
+  <!-- SCREEN 2 -->
+
+  <section class="screen" id="screen2">
+
+    <div class="emoji">🎁</div>
+
+    <h2>Okay Dad... ❤️</h2>
+
+    <p>
+      Since my birthday is coming,
+      what are you getting me? 👀😂
+    </p>
+
+    <p>
+      Don't disappoint your son ooo 😂
+      <br>
+      <span class="highlight">Choose wisely. 😌</span>
+    </p>
+
+    <button onclick="nextScreen(3)">
+      Show My Options 😎
+    </button>
+
+  </section>
+
+
+  <!-- SCREEN 3 -->
+
+  <section class="screen" id="screen3">
+
+    <h2>Dad's Birthday Gift 🎁</h2>
+
+    <p>Choose one for your son 👀</p>
+
+    <div class="gifts">
+
+      <div class="gift"
+           onclick="chooseGift('Redmi Turbo 4 Pro', this)">
+
+        <div class="gift-icon">📱</div>
+
+        <div class="gift-info">
+          <h3>Redmi Turbo 4 Pro</h3>
+          <span>The dream phone 🔥</span>
+        </div>
+
+        <div class="radio"></div>
+
+      </div>
+
+
+      <div class="gift"
+           onclick="chooseGift('iQOO Neo 10', this)">
+
+        <div class="gift-icon">📱</div>
+
+        <div class="gift-info">
+          <h3>iQOO Neo 10</h3>
+          <span>A very good alternative 😎</span>
+        </div>
+
+        <div class="radio"></div>
+
+      </div>
+
+
+      <div class="gift"
+           onclick="chooseGift('Money', this)">
+
+        <div class="gift-icon">💰</div>
+
+        <div class="gift-info">
+          <h3>Money 💵</h3>
+          <span>Dad knows what to do 😂</span>
+        </div>
+
+        <div class="radio"></div>
+
+      </div>
+
+    </div>
+
+    <div class="small">
+      Pick one to continue 👇
+    </div>
+
+  </section>
+
+
+  <!-- SCREEN 4 -->
+
+  <section class="screen" id="screen4">
+
+    <div class="result-emoji" id="resultEmoji">
+      🥳
+    </div>
+
+    <h1 id="resultTitle">
+      Excellent Choice! 😂
+    </h1>
+
+    <p id="resultText"></p>
+
+    <div class="promise">
+
+      🤞 <strong>My Promise:</strong>
+
+      <br><br>
+
+      I promise I'll make you proud,
+      behave myself, focus on my studies,
+      and become the successful son
+      you're expecting me to be. ❤️
+
+    </div>
+
+    <div class="signature">
+      Love you, Dad ❤️
+    </div>
+
+    <br><br>
+
+    <button onclick="location.reload()">
+      Choose Again 😂
+    </button>
+
+  </section>
+
+</div>
+
+
+<script>
+
+function nextScreen(number) {
+
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  document
+    .getElementById("screen" + number)
+    .classList.add("active");
+
+  updateDots(number);
+}
+
+
+function updateDots(number) {
+
+  document.querySelectorAll(".dot").forEach(dot => {
+    dot.classList.remove("active");
+  });
+
+  if (number <= 3) {
+    document
+      .getElementById("d" + number)
+      .classList.add("active");
+  } else {
+    document
+      .getElementById("d3")
+      .classList.add("active");
+  }
+}
+
+
+function chooseGift(gift, element) {
+
+  document.querySelectorAll(".gift").forEach(card => {
+    card.classList.remove("selected");
+  });
+
+  element.classList.add("selected");
+
+  setTimeout(() => {
+
+    const title =
+      document.getElementById("resultTitle");
+
+    const text =
+      document.getElementById("resultText");
+
+    const emoji =
+      document.getElementById("resultEmoji");
+
+
+    if (gift === "Redmi Turbo 4 Pro") {
+
+      emoji.textContent = "🔥📱";
+
+      title.textContent =
+        "DAD!!! YOU'RE THE BEST! 😭🔥";
+
+      text.innerHTML =
+        "You chose the <strong>Redmi Turbo 4 Pro!</strong>" +
+        "<br><br>" +
+        "Dad, I knew you wouldn't disappoint me. 😂❤️";
+
+
+    } else if (gift === "iQOO Neo 10") {
+
+      emoji.textContent = "😎📱";
+
+      title.textContent =
+        "DAD, NICE ONE! 😂🔥";
+
+      text.innerHTML =
+        "You chose the <strong>iQOO Neo 10!</strong>" +
+        "<br><br>" +
+        "Okay Dad, that's a serious birthday gift. " +
+        "I'll gladly accept it. 😌😂";
+
+
+    } else {
+
+      emoji.textContent = "💰😂";
+
+      title.textContent =
+        "MONEY?! DAD! 👀😂";
+
+      text.innerHTML =
+        "You chose <strong>MONEY!</strong>" +
+        "<br><br>" +
+        "Fair enough, Dad 😂. " +
+        "I'll handle the phone shopping myself. 👀💵";
+
+    }
+
+
+    nextScreen(4);
+
+    makeConfetti();
+
+  }, 450);
+}
+
+
+function makeConfetti() {
+
+  for (let i = 0; i < 45; i++) {
+
+    const confetti =
+      document.createElement("div");
+
+    confetti.className = "confetti";
+
+    confetti.style.left =
+      Math.random() * 100 + "vw";
+
+    confetti.style.animationDelay =
+      Math.random() * 1.5 + "s";
+
+    confetti.style.background =
+      ["#ffd84d",
+       "#ff6b6b",
+       "#6be7ff",
+       "#b98cff"]
+      [Math.floor(Math.random() * 4)];
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 4500);
+
+  }
+}
+
+</script>
+
+</body>
+</html>
